@@ -2,8 +2,9 @@ const Weather = require("./weather");
 
 describe("Weather", () => {
   describe("load method", () => {
-    test("should set current_data correctly", () => {
+    it("should set current_data correctly", () => {
       const mockWeatherClass = {
+        // creating double for mocking with built in methods from jest
         fetchWeatherData: jest.fn().mockResolvedValue({
           name: "London",
           weather: "Sunny",
@@ -29,7 +30,7 @@ describe("Weather", () => {
   });
 
   describe("getWeatherData method", () => {
-    test("should log weather data to the console", () => {
+    it("should log weather data to the console", () => {
       const weather = new Weather();
 
       weather.current_data = {
@@ -48,13 +49,15 @@ describe("Weather", () => {
       expect(consoleLogSpy).toHaveBeenCalledWith("Temperature: 25");
       expect(consoleLogSpy).toHaveBeenCalledWith("Feels like: 28");
       expect(consoleLogSpy).toHaveBeenCalledWith("Humidity: 60");
-
+      // The original console.log function is replaced by the spy. After we have
+      // finished using the spy and performed any necessary assertions or test logic,
+      // we call consoleLogSpy.mockRestore() to restore the original console.log function.
       consoleLogSpy.mockRestore();
     });
   });
 
   describe("compareWith method", () => {
-    test("should compare temperatures and log the result", () => {
+    it("should compare temperatures and log the result", () => {
       const mockWeatherClass = {
         fetchWeatherData: jest.fn().mockResolvedValue({
           name: "Paris",
