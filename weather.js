@@ -24,6 +24,18 @@ class Weather {
     console.log(`Humidity: ${this.current_data.humidity}`);
   }
 
+  displayWeather() {
+    const formattedOutput = `
+      City:         ${this.current_data.city_name}
+      Weather:      ${this.current_data.weather}
+      Temperature:  ${this.current_data.temperature.toFixed(1)}
+      Feels like:   ${this.current_data.feels_like.toFixed(1)}
+      Humidity:     ${this.current_data.humidity}%
+      `;
+
+    console.log(formattedOutput);
+  }
+
   compareWith(city) {
     return this.weather_class.fetchWeatherData(city).then((new_city_data) => {
       if (this.current_data.temperature > new_city_data.temperature) {

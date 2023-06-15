@@ -54,6 +54,35 @@ describe("Weather", () => {
       // we call consoleLogSpy.mockRestore() to restore the original console.log function.
       consoleLogSpy.mockRestore();
     });
+
+    test("should display the weather information in the correct format", () => {
+      const weather = new Weather();
+      weather.current_data = {
+        city_name: "London",
+        weather: "Clouds",
+        temperature: 18.4,
+        feels_like: 16.0,
+        humidity: "64",
+      };
+
+      // Capture console logs
+      const consoleLogSpy = jest.spyOn(console, "log");
+
+      // Invoke the method
+      weather.displayWeather();
+
+      // Assert the formatted output
+      expect(consoleLogSpy).toHaveBeenCalledWith(`
+      City:         London
+      Weather:      Clouds
+      Temperature:  18.4
+      Feels like:   16.0
+      Humidity:     64%
+      `);
+
+      // Restore the original console.log implementation
+      consoleLogSpy.mockRestore();
+    });
   });
 
   describe("compareWith method", () => {
