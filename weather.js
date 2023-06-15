@@ -25,15 +25,17 @@ class Weather {
   }
 
   compareWith(city) {
-    this.weather_class.fetchWeatherData(city).then((new_city_data) => {
+    return this.weather_class.fetchWeatherData(city).then((new_city_data) => {
       if (this.current_data.temperature > new_city_data.temperature) {
         console.log(
-          `${this.current_data.city_name} is warmer then ${new_city_data.name}`
+          `${this.current_data.city_name} is warmer than ${new_city_data.name}`
         );
+        return `${this.current_data.city_name} is warmer than ${new_city_data.name}`;
       } else {
         console.log(
-          `${new_city_data.name} is warmer then ${this.current_data.city_name}`
+          `${new_city_data.name} is warmer than ${this.current_data.city_name}`
         );
+        return `${new_city_data.name} is warmer than ${this.current_data.city_name}`;
       }
     });
   }
