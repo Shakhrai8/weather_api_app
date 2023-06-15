@@ -2,6 +2,30 @@ class Weather {
   constructor(weather_class) {
     this.weather_class = weather_class;
     this.current_data = {};
+
+    // Set up periodic data refresh
+    this.refreshInterval = setInterval(() => {
+      this.refreshData();
+    }, 5000); // Refresh every 5 seconds
+  }
+
+  refreshData() {
+    // Fetch the latest weather data
+    this.weather_class
+      .fetchWeatherData(this.current_data.city_name)
+      .then((result) => {
+        // Update the current_data property
+        this.current_data = {
+          city_name: result.name,
+          weather: result.weather,
+          temperature: result.temperature,
+          feels_like: result.feels_like,
+          humidity: result.humidity,
+        };
+      })
+      .catch((error) => {
+        console.log("Error refreshing weather data:", error.message);
+      });
   }
 
   load(city) {
@@ -38,6 +62,11 @@ class Weather {
         return `${new_city_data.name} is warmer than ${this.current_data.city_name}`;
       }
     });
+  }
+
+  stopRefresh() {
+    // Stop the periodic data refresh
+    clearInterval(this.refreshInterval);
   }
 }
 
