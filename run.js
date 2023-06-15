@@ -5,5 +5,5 @@ const client = new WeatherClient();
 const weather = new Weather(client);
 
 weather.load("London").then((result) => {
-  return weather.getWeatherData();
+  return weather.compareWith("Dubai");
 });

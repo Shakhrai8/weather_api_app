@@ -24,7 +24,19 @@ class Weather {
     console.log(`Humidity: ${this.current_data.humidity}`);
   }
 
-  compareWith(city) {}
+  compareWith(city) {
+    this.weather_class.fetchWeatherData(city).then((new_city_data) => {
+      if (this.current_data.temperature > new_city_data.temperature) {
+        console.log(
+          `${this.current_data.city_name} is warmer then ${new_city_data.name}`
+        );
+      } else {
+        console.log(
+          `${new_city_data.name} is warmer then ${this.current_data.city_name}`
+        );
+      }
+    });
+  }
 }
 
 module.exports = Weather;
