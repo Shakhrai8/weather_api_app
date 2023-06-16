@@ -115,36 +115,4 @@ describe("Weather", () => {
       consoleLogSpy.mockRestore();
     });
   });
-
-  jest.useFakeTimers();
-
-  describe("Weather timer", () => {
-    let weather;
-    let weatherClassMock;
-
-    beforeEach(() => {
-      // Mock the weather class
-      weatherClassMock = {
-        fetchWeatherData: jest.fn().mockResolvedValue({
-          name: "London",
-          weather: "Clouds",
-          temperature: 18.4,
-          feels_like: 16.0,
-          humidity: "64%",
-        }),
-      };
-
-      // Create a new Weather instance
-      weather = new Weather(weatherClassMock);
-    });
-
-    afterEach(() => {
-      // Stop the refresh interval after each test
-      weather.stopRefresh();
-    });
-
-    test("should periodically refresh weather data every 5 seconds", () => {
-      // Test case for the timer functionality
-    });
-  });
 });

@@ -4,28 +4,32 @@ class Weather {
     this.current_data = {};
 
     // Set up periodic data refresh
-    this.refreshInterval = setInterval(() => {
-      this.refreshData();
-    }, 5000); // Refresh every 5 seconds
+    this.refreshInterval = setInterval(this.refreshData.bind(this), 5000); // Refresh every 5 seconds
   }
 
   refreshData() {
-    // Fetch the latest weather data
-    this.weather_class
-      .fetchWeatherData(this.current_data.city_name)
-      .then((result) => {
-        // Update the current_data property
-        this.current_data = {
-          city_name: result.name,
-          weather: result.weather,
-          temperature: result.temperature,
-          feels_like: result.feels_like,
-          humidity: result.humidity,
-        };
-      })
-      .catch((error) => {
-        console.log("Error refreshing weather data:", error.message);
-      });
+    if (this.current_data.city_name && this.refreshInterval) {
+      console.log("Refreshing weather data\n");
+
+      this.weather_class
+        .fetchWeatherData(this.current_data.city_name)
+        .then((result) => {
+          this.current_data = {
+            city_name: result.name,
+            weather: result.weather,
+            temperature: result.temperature,
+            feels_like: result.feels_like,
+            humidity: result.humidity,
+          };
+          this.getWeatherData();
+          console.log("-----------------------");
+        })
+        .catch((error) => {
+          console.log("Error refreshing weather data:", error.message);
+        });
+    } else {
+      console.log("City name is not available for refresh");
+    }
   }
 
   load(city) {
