@@ -110,4 +110,36 @@ describe("Weather", () => {
       consoleLogSpy.mockRestore();
     });
   });
+
+  describe("refreshData method", () => {
+    jest.useFakeTimers();
+    mockWeatherClass = {
+      fetchWeatherData: jest.fn().mockResolvedValue({
+        name: "London",
+        weather: "Sunny",
+        temperature: 25,
+        feels_like: 28,
+        humidity: 60,
+      }),
+    };
+    weather = new Weather(mockWeatherClass);
+
+    it("should stop refreshing data after calling stopRefresh method", () => {
+      weather.stopRefresh();
+
+      const fetchWeatherDataSpy = jest.spyOn(
+        mockWeatherClass,
+        "fetchWeatherData"
+      );
+
+      // Wait for the refresh interval
+      jest.advanceTimersByTime(5000);
+      jest.runOnlyPendingTimers();
+
+      expect(fetchWeatherDataSpy).toHaveBeenCalledTimes(0);
+
+      // Restore the original fetchWeatherData implementation
+      fetchWeatherDataSpy.mockRestore();
+    });
+  });
 });
